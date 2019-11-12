@@ -16,6 +16,7 @@
         @focus="isFocused = true"
         @blur="handleBlur"
         @input="handleInput($event.target.value)"
+        @keydown="handleKeyDown($event)"
         autocomplete="off"
       />
       <div v-if="$slots.append || append" class="input-group-append">
@@ -27,14 +28,15 @@
     <vue-bootstrap-typeahead-list
       class="vbt-autcomplete-list"
       ref="list"
-      v-show="isFocused && data.length > 0"
+      :class="{'vbt-autcomplete-list--hidden': !(isFocused && data.length > 0)}"
       :query="inputValue"
       :data="formattedData"
       :background-variant="backgroundVariant"
       :text-variant="textVariant"
       :maxMatches="maxMatches"
       :minMatchingChars="minMatchingChars"
-      @hit="handleHit"
+      @hit="handleHit($event)"
+      @keydown="handleKeyDown($event)"
     >
       <!-- pass down all scoped slots -->
       <template v-for="(slot, slotName) in $scopedSlots" :slot="slotName" slot-scope="{ data, htmlText }">
@@ -158,6 +160,21 @@ export default {
       if (typeof this.value !== 'undefined') {
         this.$emit('input', newValue)
       }
+    },
+
+    handleKeyDown(evt) {
+      if (! this.isFocused || this.data.length < 1) return
+
+      switch (evt.key) {
+        case 'ArrowUp':
+        case 'Up':
+        case 'ArrowDown':
+        case 'Down':
+        case 'Enter':
+          evt.preventDefault()
+          this.$emit('selectionKeyPressed', evt)
+          break
+      }
     }
   },
 
@@ -189,5 +206,20 @@ export default {
     max-height: 350px;
     overflow-y: auto;
     z-index: 999;
+  }
+
+  /* Fake for IE. because it doesn't emit the hit event when using display:none */
+  .vbt-autcomplete-list--hidden {
+      animation-name: hide;
+      animation-fill-mode: both;
+      animation-duration: .3s;
+      animation-timing-function: linear;
+  }
+
+  @keyframes hide {
+      to {
+          visibility: hidden;
+          display: none;
+      }
   }
 </style>

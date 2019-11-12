@@ -7,6 +7,7 @@
       :background-variant="backgroundVariant"
       :text-variant="textVariant"
       @click.native="handleHit(item, $event)"
+      @keydown="$listeners.keydown($event)"
     >
       <template v-if="$scopedSlots.suggestion" slot="suggestion" slot-scope="{ data, htmlText }">
         <slot name="suggestion" v-bind="{ data, htmlText }" />
@@ -96,8 +97,59 @@ export default {
         }).slice(0, this.maxMatches)
     }
   },
+  mounted() {
+    this.$parent.$on('selectionKeyPressed', this.handleSelectionKey.bind(this))
+  },
 
   methods: {
+    handleSelectionKey(evt) {
+      if (this.data.length < 1) return
+
+      let active = this.findActiveItemIndex()
+      let ch = this.$children
+      switch (evt.key) {
+        case 'ArrowUp':
+        case 'Up':
+          this.setActiveItem((active > 0) ? (active - 1) : (ch.length - 1))
+          break
+        case 'ArrowDown':
+        case 'Down':
+          this.setActiveItem((active + 1) % ch.length)
+          break
+        case 'Enter':
+          this.$emit('hit', this.findActiveItem())
+          break
+      }
+    },
+
+    findActiveItem() {
+      let idx = this.findActiveItemIndex()
+      return (idx < 0) ? null : this.matchedItems[idx]
+    },
+
+    findActiveItemIndex() {
+      let ch = this.$children
+      for (let i = 0; i < ch.length; i++) {
+        let item = ch[i]
+        if (item.active) {
+          return i
+        }
+      }
+      return -1
+    },
+
+    setActiveItem(idx) {
+      this.$children.forEach((item, i) => {
+        if (i === idx) {
+          item.active = true
+          item.$el.scrollIntoView(false)
+        }
+        else {
+          item.active = false
+        }
+      })
+    },
+
     handleHit(item, evt) {
       this.$emit('hit', item)
       evt.preventDefault()

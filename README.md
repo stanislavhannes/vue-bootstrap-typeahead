@@ -1,13 +1,13 @@
 # vue-bootstrap-typeahead
 
-[![NPM](https://nodei.co/npm/vue-bootstrap-typeahead.png)](https://www.npmjs.com/package/vue-bootstrap-typeahead)
-
-[![Build Status](https://travis-ci.org/alexurquhart/vue-bootstrap-typeahead.svg?branch=master)](https://travis-ci.org/alexurquhart/vue-bootstrap-typeahead)
-[![Coverage Status](https://coveralls.io/repos/github/alexurquhart/vue-bootstrap-typeahead/badge.svg?branch=master)](https://coveralls.io/github/alexurquhart/vue-bootstrap-typeahead?branch=master)
-[![npm](https://img.shields.io/npm/dm/vue-bootstrap-typeahead.svg)](https://www.npmjs.com/package/vue-bootstrap-typeahead)
 [![GitHub license](https://img.shields.io/github/license/alexurquhart/vue-bootstrap-typeahead.svg)](https://github.com/alexurquhart/vue-bootstrap-typeahead/blob/master/LICENSE.txt)
 
 A simple `list-group` based typeahead/autocomplete using Bootstrap 4 and Vue 2
+
+## Features in this Fork
+
+- added keyboard navigation (PR [#44](https://github.com/alexurquhart/vue-bootstrap-typeahead/pull/44))
+- fully compatible with all Browsers, including IE10 (fixed Bug [#14](https://github.com/alexurquhart/vue-bootstrap-typeahead/issues/14))
 
 <img src="https://raw.githubusercontent.com/alexurquhart/vue-bootstrap-typeahead/master/assets/screenshot.png" alt="Preview image of the vue-bootstrap-typeahead component">
 
@@ -24,37 +24,39 @@ From NPM:
 Minified UMD and CommonJS builds are available in the 'dist' folder. The component is also available for use in the browser directly on unpkg:
 
 ```html
-<link href="https://unpkg.com/vue-bootstrap-typeahead/dist/VueBootstrapTypeahead.css" rel="stylesheet">
+<link
+  href="https://unpkg.com/vue-bootstrap-typeahead/dist/VueBootstrapTypeahead.css"
+  rel="stylesheet"
+/>
 <script src="https://unpkg.com/vue-bootstrap-typeahead"></script>
 ```
 
 ## Usage
 
 Import and register the component
+
 ```javascript
-import VueBootstrapTypeahead from 'vue-bootstrap-typeahead'
+import VueBootstrapTypeahead from "vue-bootstrap-typeahead";
 
 // Global registration
-Vue.component('vue-bootstrap-typeahead', VueBootstrapTypeahead)
+Vue.component("vue-bootstrap-typeahead", VueBootstrapTypeahead);
 
 // OR
 
 // Local registration
 export default {
-    components: {
-        VueBootstrapTypeahead
-    }
-}
+  components: {
+    VueBootstrapTypeahead
+  }
+};
 ```
 
 ### Basic Usage
+
 The only required attribute is a `data` array.
 
 ```html
-<vue-bootstrap-typeahead 
-  v-model="query"
-  :data="['Canada', 'USA', 'Mexico']"
-/>
+<vue-bootstrap-typeahead v-model="query" :data="['Canada', 'USA', 'Mexico']" />
 ```
 
 ### Working with API's
@@ -107,24 +109,25 @@ export default {
 
 ### Attributes
 
-Name | Type | Default | Description
---- | --- | --- | ---
-data | `Array` | | Array of data to be available for querying. **Required**
-serializer | `Function` | `input => input` | Function used to convert the entries in the `data` array into a text string.
-size | `String` | | Size of the `input-group`. Valid values: `sm` or `lg`
-backgroundVariant | `String` | | Background color for the autocomplete result `list-group` items. [See valid values](http://getbootstrap.com/docs/4.1/utilities/colors/#background-color)
-textVariant | `String` | | Text color for the autocomplete result `list-group` items. [See valid values](http://getbootstrap.com/docs/4.1/utilities/colors/#color)
-inputClass | `String` | | Class to the added to the `input` tag for validation, etc.
-maxMatches | `Number` | 10 | Maximum amount of list items to appear.
-minMatchingChars | `Number` | 2 | Minimum matching characters in query before the typeahead list appears
-prepend | `String` | | Text to be prepended to the `input-group`
-append | `String` | | Text to be appended to the `input-group`
+| Name              | Type       | Default          | Description                                                                                                                                              |
+| ----------------- | ---------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| data              | `Array`    |                  | Array of data to be available for querying. **Required**                                                                                                 |
+| serializer        | `Function` | `input => input` | Function used to convert the entries in the `data` array into a text string.                                                                             |
+| size              | `String`   |                  | Size of the `input-group`. Valid values: `sm` or `lg`                                                                                                    |
+| backgroundVariant | `String`   |                  | Background color for the autocomplete result `list-group` items. [See valid values](http://getbootstrap.com/docs/4.1/utilities/colors/#background-color) |
+| textVariant       | `String`   |                  | Text color for the autocomplete result `list-group` items. [See valid values](http://getbootstrap.com/docs/4.1/utilities/colors/#color)                  |
+| inputClass        | `String`   |                  | Class to the added to the `input` tag for validation, etc.                                                                                               |
+| maxMatches        | `Number`   | 10               | Maximum amount of list items to appear.                                                                                                                  |
+| minMatchingChars  | `Number`   | 2                | Minimum matching characters in query before the typeahead list appears                                                                                   |
+| prepend           | `String`   |                  | Text to be prepended to the `input-group`                                                                                                                |
+| append            | `String`   |                  | Text to be appended to the `input-group`                                                                                                                 |
 
 ### Events
-Name | Description
---- | ---
-`hit` | Triggered when an autocomplete item is selected. The entry in the input `data` array that was selected is returned.
-`input` | The component can be used with `v-model`
+
+| Name    | Description                                                                                                         |
+| ------- | ------------------------------------------------------------------------------------------------------------------- |
+| `hit`   | Triggered when an autocomplete item is selected. The entry in the input `data` array that was selected is returned. |
+| `input` | The component can be used with `v-model`                                                                            |
 
 ### Slots
 
