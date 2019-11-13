@@ -9,7 +9,7 @@ A simple `list-group` based typeahead/autocomplete using Bootstrap 4 and Vue 2
 ## Features in this Fork
 
 - added keyboard navigation (PR [#44](https://github.com/alexurquhart/vue-bootstrap-typeahead/pull/44))
-- fully compatible with all Browsers, including IE10 (fixed Bug [#14](https://github.com/alexurquhart/vue-bootstrap-typeahead/issues/14))
+- fully compatible with all Browsers, including IE11 (fixed Bug [#14](https://github.com/alexurquhart/vue-bootstrap-typeahead/issues/14))
 
 ## [View The Examples](https://alexurquhart.github.io/vue-bootstrap-typeahead/#/examples)
 
